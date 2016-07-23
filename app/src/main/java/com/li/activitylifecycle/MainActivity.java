@@ -12,24 +12,33 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static final String BOOK_NAME_OF_CATEGORY_PHYSICAL = "bookNameOfCategoryPhysical";
+    private Button mButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: ");
-        Button button = (Button) findViewById(R.id.activity_main_button);
+        mButton = (Button) findViewById(R.id.activity_main_button);
         final EditText editText =(EditText)findViewById(R.id.activity_main_edit_text);
-        button.setOnClickListener(new View.OnClickListener()
+        mButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_SHORT).show();
-               Intent intent = new Intent(MainActivity.this, ActivitySecond.class);
+              Log.d(TAG,"onClick");
+                Intent intent = new Intent(MainActivity.this, ActivitySecond.class);
                 intent.putExtra(BOOK_NAME_OF_CATEGORY_PHYSICAL,editText.getText().toString());
-                startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            String name=data.getStringExtra("back");
+            Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
+        }
+
 
     @Override
     protected void onStart() {

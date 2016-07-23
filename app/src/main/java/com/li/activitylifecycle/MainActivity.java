@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static final String BOOK_NAME_OF_CATEGORY_PHYSICAL = "bookNameOfCategoryPhysical";
     private Button mButton;
+    private Button mThirdButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +32,28 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,0);
             }
         });
+
+        mThirdButton =(Button) findViewById(R.id.activity_main_third_button);
+        mThirdButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,ThirdActivity.class);
+                startActivityForResult(intent,1);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            String name=data.getStringExtra("back");
+        String name="";
+        switch (requestCode){
+            case 0:
+                name=data.getStringExtra("back");
+                break;
+            case 1:
+                name=data.getStringExtra("backThird");
+        }
+
             Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
         }
 
